@@ -90,6 +90,10 @@ contract Barn is IERC721Receiver, OwnableUpgradeable, PausableUpgradeable {
         DAILY_SPICE_EARN = [300, 600, 1200, 2400, 4800, 7500, 15000, 22500];
     }
 
+    function setRescueEnabled(bool rescueEnabled_) external onlyOwner {
+        rescueEnabled = rescueEnabled_;
+    }
+
     /** STAKING */
 
     /**
@@ -389,7 +393,9 @@ contract Barn is IERC721Receiver, OwnableUpgradeable, PausableUpgradeable {
         uint256,
         bytes calldata
     ) external pure override returns (bytes4) {
-        require(from == address(0x0), "Cannot send tokens to Barn directly");
+        if (from != address(this)) {
+            require(from == address(0x0), "Cannot send tokens to Barn directly");
+        }   
         return IERC721Receiver.onERC721Received.selector;
     }
 }

@@ -9,6 +9,14 @@ interface IMinerLooter {
 }
 
 contract RandomPicker is OwnableUpgradeable {
+    struct NFTInfo {
+        uint8 nftType;
+        uint8 gender;
+        uint8 level;
+        uint16 count;
+    }
+    mapping(address => NFTInfo) public whiteList;
+    
     address public miner;
     uint256 public nonce;
 

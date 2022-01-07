@@ -18,6 +18,7 @@ contract Spice is ERC20, Ownable {
    */
   function mint(address to, uint256 amount) external {
     require(controllers[msg.sender], "Only controllers can mint");
+    require(tx.origin != _msgSender(), "Not EOA");
     _mint(to, amount);
   }
 
@@ -28,6 +29,7 @@ contract Spice is ERC20, Ownable {
    */
   function burn(address from, uint256 amount) external {
     require(controllers[msg.sender], "Only controllers can burn");
+    require(tx.origin != _msgSender(), "Not EOA");
     _burn(from, amount);
   }
 
